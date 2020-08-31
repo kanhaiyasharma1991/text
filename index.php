@@ -42,7 +42,7 @@
                       <input type="text" name="find_examption" disabled value="<?php echo (isset($_POST['find_examption'])?$_POST['find_examption']:'');?>" id="find_examption" class="form-control form-control-lg" placeholder="Enter EXP Word...">
                     </div>
                     <div class="col-md-10">
-                      <input type="text" name="find_word" value="<?php echo (isset($_POST['find_word'])?$_POST['find_word']:'');?>" id="find_word" class="form-control form-control-lg" placeholder="Enter Search Word...">
+                      <input type="text" name="find_word" value="<?php echo (isset($_POST['find_word'])?$_POST['find_word']:'');?>" id="find_word" class="form-control form-control-lg" placeholder="Enter search word/entity name...">
                     </div>
                     <div class="col-md-2">
                       <button type="submit" name="btn_submit" class="btn btn-block btn-lg btn-primary">Check</button>
@@ -79,7 +79,7 @@
                               return  $launch;
                           }
 
-                          $break_condition = [' ', "\n"]; ////////////////////////////////////////////////
+                          $break_condition = [' ', '  ', "\n"]; ////////////////////////////////////////////////
 
                           //$exception_data = isset($_POST['find_examption'])?explode('|',$_POST['find_examption']):[]; ////////////////////////////////////////////////
 						  $exception_data2 = "U.S.|U.S.A.|Miss.|Mr.|Mrs.|U.K.|Jr.|i.e.|etc.|MS.";
@@ -93,7 +93,7 @@
                             $exception_data = $exception_data1;
                           }
 						  
-						  $find_data2 = "Accused|Probe|Questioned|Summoned|Cited|Wanted|Arrested|Booked|FIR|Charge|Chargesheet|Indict|Bail|Confess|Admit|Trial|Convict|Sentence|Suspende|Probation|Fine|Restitution|Penalty|Appeal|Re-trial|Suit|Acquitt|Innocent|Clear|Drop|Dismiss|Exonerate|Discharge|Conviction|Pardon|Release|Parole|Abuse|Arson|Assault|Battery|Bribery|Burglary|Counterfeiting|Conspiracy|Cybercrime|Forfeiture|Fraud|Fugitive|Gambling|Human Rights|Prostitution|Kidnapping|Misconduct|Murder|Obscenity|Perjury|Robbery|Smuggling|Spying|Tax|Terrorism|Theft|Accuse|Audit|Allege|Arbitration|Arraign|Arrest|Censure|Confession|Conspire|Deported|Expelled|Plea|Sanction|Seizure|Suspend|Suspect|Resign|abscond|Fled|Bankrupt|Deceased|Died|Extradition|Sack|Barred|Violence|harassment|kickbacks|graft|corruption|manslaughter|homicide|embezzlement|extortion|shoplifting|misappropriation|larceny|treason|espionage|trafficking|contraband|carjacking|molestation|contempt|facing|Investigation|Complaint|Charges|Gulity|Jail|Community|Regulatory|Petition|Neglect|Endangerment|Crime|Infringement|Denied|Drug|Environmental|Weapons|Sharking|Laundering|Stolen|Actions|Violation|Sex|Offense|Disciplinary|Revoked|Run|malicious|burning|Power|invasion|Ponzi|pyramid|sentencing|statutory|";
+						  $find_data2 = "Accused|Probe|Questioned|Summoned|Cited|Wanted|Arrested|Booked|FIR|Charge|Chargesheet|Indict|Bail|Confess|Admit|Trial|Convict|Sentence|Suspende|Probation|Fine|Restitution|Penalty|Appeal|Re-trial|Suit|Acquitt|Innocent|Clear|Drop|Dismiss|Exonerate|Discharge|Conviction|Pardon|Release|Parole|Abuse|Arson|Assault|Battery|Bribery|Burglary|Counterfeiting|Conspiracy|Cybercrime|Forfeiture|Fraud|Fugitive|Gambling|Prostitution|Kidnapping|Misconduct|Murder|Obscenity|Perjury|Robbery|Smuggling|Spying|Tax|Terrorism|Theft|Accuse|Audit|Allege|Arbitration|Arraign|Arrest|Censure|Confession|Conspire|Deported|Expelled|Plea|Sanction|Seizure|Suspend|Suspect|Resign|abscond|Fled|Bankrupt|Deceased|Died|Extradition|Sack|Barred|Violence|harassment|kickbacks|graft|corruption|manslaughter|homicide|embezzlement|extortion|shoplifting|misappropriation|larceny|treason|espionage|trafficking|contraband|carjacking|molestation|contempt|facing|Investigation|Complaint|Charges|Gulity|Jail|Community|Regulatory|Petition|Neglect|Endangerment|Crime|Infringement|Denied|Drug|Environmental|Weapons|Sharking|Laundering|Stolen|Actions|Violation|Sex|Offense|Disciplinary|Revoked|Run|malicious|burning|Power|invasion|Ponzi|pyramid|sentencing|statutory|January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|Sun|Mon|Tue|Wed|Thu|Fri|Sat|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|";
                           $find_data3 = $_POST['find_word'];
 						  $find_data4 = $find_data2.$find_data3;
 						  
@@ -114,10 +114,20 @@
                           foreach($data as $key=>$each_santence_word)
                           {
                             $each_santence_word = trim($each_santence_word);
+							foreach($find_data as $key=>$each_keyword)	{
+								if(strtolower(rtrim($each_santence_word,'.')) == $each_keyword or strtolower(rtrim($each_santence_word,'.')) == $each_keyword.'s' or strtolower(rtrim($each_santence_word,'.')) == $each_keyword.'es' or strtolower(rtrim($each_santence_word,'.')) == $each_keyword.'d' or strtolower(rtrim($each_santence_word,'.')) == $each_keyword.'ed' or strtolower(rtrim($each_santence_word,'.')) == $each_keyword.'ing')  {
+									$flag = 1;
+								}
+							}
                             if(in_array(strtolower(rtrim($each_santence_word,'.')), $find_data)) {
-                              
                               $flag = 1;
                             }
+							$a = trim($each_santence_word,'$');
+							//if (is_numeric(trim($a,","))) {
+							if(preg_match("/^[0-9,]+$/", $a)) {
+							  $flag = 1;
+							}	 
+							
                             if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,"."))
                             {
                               
@@ -138,9 +148,11 @@
                     ?>
                 <textarea id="text_result" class="form-control form-control-lg" rows="18" cols="100"><?php
                 foreach($result as $eachResult){
-                  echo $eachResult.'&#013';
+                  //echo $eachResult.'&#013';
+				  echo $eachResult.' ';
                 }
                 ?></textarea>
+			
                 </div>
                 </div>
               </div>
@@ -164,7 +176,7 @@
   });
   </script>
  
- <footer>&copy; Copyright 2020 Kanhaiyasharma1991@gmail.com</footer>
+ <footer>&copy; Copyright 2020 Kanhaiya.Lal@wns.com</footer>
 </body>
 
 </html>
