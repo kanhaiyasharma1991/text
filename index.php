@@ -128,7 +128,9 @@
 							  $flag = 1;
 							}	 
 							
-                            if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,"."))
+							
+                            if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,".") && strpos($each_santence_word,".")>1 )
+							//if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,"."))
                             {
                               
                               if ($flag == 1){
@@ -148,8 +150,8 @@
                     ?>
                 <textarea id="text_result" class="form-control form-control-lg" rows="18" cols="100"><?php
                 foreach($result as $eachResult){
-                  //echo $eachResult.'&#013';
-				  echo $eachResult.' ';
+                  echo $eachResult.'&#013'.'&#013';
+				  //echo $eachResult.' ';
                 }
                 ?></textarea>
 			
@@ -176,7 +178,7 @@
   });
   </script>
  
- <footer>&copy; Copyright 2020 Riskography</footer>
+ <footer>&copy; Copyright 2020 Kanhaiya.Lal@wns.com</footer>
 </body>
 
 </html>
