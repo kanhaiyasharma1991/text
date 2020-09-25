@@ -178,7 +178,7 @@
   });
   </script>
  
- <footer>&copy; Copyright 2020 Kanhaiya.Lal@wns.com</footer>
+ <footer>&copy; Copyright 2020</footer>
 </body>
 
 </html>
