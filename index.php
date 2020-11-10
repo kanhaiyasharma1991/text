@@ -123,16 +123,14 @@
                               $flag = 1;
                             }
 							$a = trim($each_santence_word,'$');
-							//if (is_numeric(trim($a,","))) {
-							if(preg_match("/^[0-9,]+$/", $a)) {
+							$b = substr($each_santence_word,1);
+							//preg_match('/^[0-9]+(\.[0-9]{1,4})?$/', $a)   preg_match("/^[0-9,]+$/", $a)
+							if(preg_match('/^[0-9,]+(\.[0-9,]{1,4})?$/', $a) or preg_match('/^[0-9,]+(\.[0-9,]{1,4})?$/', $b)) {
 							  $flag = 1;
-							}	 
+							}
 							
-							
-                            if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,".") && strpos($each_santence_word,".")>1 )
-							//if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,"."))
+                            if(!in_array(strtolower($each_santence_word), $exception_data) && strpos($each_santence_word,".") && strpos($each_santence_word,".")>1 && is_numeric($a)==false )
                             {
-                              
                               if ($flag == 1){
                                 $santance .= $each_santence_word;
                                 array_push($result,ltrim($santance,'.'));
@@ -178,7 +176,7 @@
   });
   </script>
  
- <footer>&copy; Copyright 2020</footer>
+ <footer>&copy; Copyright 2020 Kanhaiya</footer>
 </body>
 
 </html>
