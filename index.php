@@ -82,7 +82,7 @@
                           $break_condition = [' ', '  ', "\n"]; ////////////////////////////////////////////////
 
                           //$exception_data = isset($_POST['find_examption'])?explode('|',$_POST['find_examption']):[]; ////////////////////////////////////////////////
-						  $exception_data2 = "U.S.|U.S.A.|Miss.|Mr.|Mrs.|U.K.|Jr.|i.e.|etc.|MS.";
+						  $exception_data2 = "U.S.|U.S.A.|Miss.|Mr.|Mrs.|U.K.|Jr.|i.e.|etc.|MS.|Jan.|Feb.|Mar.|Apr.|May.|Jun.|Jul.|Aug.|Sept.|Oct.|Nov.|Dec.";
 						  $exception_data = explode('|',$exception_data2);
                           $exception_data1 = [];
 						  
@@ -133,11 +133,13 @@
                             {
                               if ($flag == 1){
                                 $santance .= $each_santence_word;
-                                array_push($result,ltrim($santance,'.'));
+                                array_push($result,ltrim($santance,' .'));
                                 $santance = trim(strrchr($each_santence_word,'.')) != ''?trim(strrchr($each_santence_word,'.')):'';
+								
                                 $flag = 0;
                                 }else {
                                   $santance = trim(strrchr($each_santence_word,'.')) != ''?trim(strrchr($each_santence_word,'.')).' ':'';
+								  
                               }
                             }else{
                               $santance .= $each_santence_word.' ';
